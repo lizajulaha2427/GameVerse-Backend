@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login & Signup</title>
+  <link rel="stylesheet" href="/login-signup.css">
+</head>
+<body>
+
+  <div class="container">
+    <h2>Login or Sign Up</h2>
+
+    <div class="button-box">
+      <button type="button" class="toggle-btn active" onclick="toggleForm('login')">Login</button>
+      <button type="button" class="toggle-btn" onclick="toggleForm('signup')">Sign Up</button>
+    </div>
+
+    <!-- Login Form -->
+    <form id="login-form" class="input-group active" method="POST" action="/login">
+      <input type="email" name="email" class="input-field" placeholder="Email" required>
+      <input type="password" name="password" class="input-field" placeholder="Password" required>
+      <button type="submit" class="submit-btn">Login</button>
+    </form>
+
+    <!-- Sign-up Form -->
+    <form id="signup-form" class="input-group" method="POST" action="/signup">
+      <input type="text" name="username" class="input-field" placeholder="Username" required>
+      <input type="email" name="email" class="input-field" placeholder="Email" required>
+      <input type="password" name="password" class="input-field" placeholder="Password" required>
+      <button type="submit" class="submit-btn">Sign Up</button>
+    </form>
+
+    <!-- Forgot Password (not implemented yet) -->
+    <form id="forgot-password-form" class="input-group" onsubmit="event.preventDefault(); alert('This feature is not yet implemented.');">
+      <input type="email" class="input-field" placeholder="Enter your email" required>
+      <button type="submit" class="submit-btn">Send OTP</button>
+    </form>
+  </div>
+
+  <script>
+    function toggleForm(formType) {
+      const loginForm = document.getElementById('login-form');
+      const signupForm = document.getElementById('signup-form');
+      const forgotPasswordForm = document.getElementById('forgot-password-form');
+      const buttons = document.querySelectorAll('.toggle-btn');
+
+      loginForm.classList.remove('active');
+      signupForm.classList.remove('active');
+      forgotPasswordForm.classList.remove('active');
+      buttons.forEach(btn => btn.classList.remove('active'));
+
+      if (formType === 'login') {
+        loginForm.classList.add('active');
+        buttons[0].classList.add('active');
+      } else if (formType === 'signup') {
+        signupForm.classList.add('active');
+        buttons[1].classList.add('active');
+      } else if (formType === 'forgot-password') {
+        forgotPasswordForm.classList.add('active');
+      }
+    }
+  </script>
+
+</body>
+</html>

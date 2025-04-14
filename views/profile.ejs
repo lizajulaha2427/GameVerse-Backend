@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gameverse Profile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/profile.css">
+</head>
+<body>
+  <h1>Profile Page</h1>
+
+  <div class="profile-container">
+    <div class="profile-header">
+      <img id="profile-pic" src="default-profile.png" alt="Profile Picture" class="profile-pic">
+      <h2 id="username"><%= user.username %></h2>
+      <p id="email"><%= user.email %></p>
+      
+      <!-- Only upload button kept -->
+      <button class="btn" id="upload-picture-btn">Upload Picture</button>
+      <button class="btn" id="share-profile-btn">Share Profile</button>
+    </div>
+
+    <div class="profile-menu">
+      <ul>
+        <li id="logout"><i class="icon">&#128682;</i> <a href="http://localhost:3000">Log Out</a></li>
+      </ul>
+    </div>
+
+    <div class="footer">
+      <ul>
+        <li id="contact-us"><a href="https://game-verse-chat-bot.vercel.app/">Help&Support</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Only Picture Upload Modal -->
+  <div id="uploadPictureModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeUploadModal">&times;</span>
+      <h2>Upload Profile Picture</h2>
+      <input type="file" id="upload-input" class="input-field" accept="image/*" required>
+      <button class="btn" id="set-picture-btn">Set Picture</button>
+    </div>
+  </div>
+
+  <script>
+    const profileImage = localStorage.getItem('profileImage');
+    if (profileImage) {
+      document.getElementById('profile-pic').src = profileImage;
+    }
+
+    // Upload Picture Modal
+    const uploadPictureModal = document.getElementById("uploadPictureModal");
+
+    document.getElementById('upload-picture-btn').addEventListener('click', function() {
+        uploadPictureModal.style.display = "block";
+    });
+
+    document.getElementById('closeUploadModal').onclick = function() {
+        uploadPictureModal.style.display = "none";
+    };
+
+    document.getElementById('set-picture-btn').addEventListener('click', function() {
+        const fileInput = document.getElementById('upload-input');
+        const file = fileInput.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const newProfileImage = e.target.result;
+                localStorage.setItem('profileImage', newProfileImage);
+                document.getElementById('profile-pic').src = newProfileImage;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        uploadPictureModal.style.display = "none";
+    });
+
+    // Close modal if clicked outside
+    window.onclick = function(event) {
+        if (event.target == uploadPictureModal) {
+            uploadPictureModal.style.display = "none";
+        }
+    };
+
+    // Logout handler
+    document.getElementById('logout').addEventListener('click', function() {
+        localStorage.clear();
+        window.location.href = 'loginSignUp.ejs';
+    });
+  </script>
+</body>
+</html>

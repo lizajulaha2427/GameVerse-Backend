@@ -1,0 +1,118 @@
+/* Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #043246, #d9cde7);
+}
+
+.container {
+    background-color: #9cc1c9;
+    width: 450px;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+.button-box {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 40px;
+    background: #eee;
+    border-radius: 30px;
+    padding: 5px;
+}
+
+.toggle-btn {
+    width: 50%;
+    padding: 12px;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    border-radius: 30px;
+    outline: none;
+}
+
+.toggle-btn.active {
+    background-color: #257298;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.input-group {
+    display: none;
+}
+
+.input-group.active {
+    display: block;
+}
+
+.input-field {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 30px;
+    outline: none;
+    font-size: 14px;
+    background-color: #f9f9f9;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: #257298;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #787a7f;
+}
+
+.message {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+.message.success {
+    color: green;
+}
+
+.message.error {
+    color: red;
+}
+
+.forgot-link {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #257298;
+    cursor: pointer;
+}

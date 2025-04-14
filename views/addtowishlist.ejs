@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wishlist</title>
+  <link rel="stylesheet" href="/wishlist.css">
+</head>
+<body>
+  <div class="wishlist-container">
+    <h2 class="wishlist-title">Your Wishlist</h2>
+    <div class="wishlist-grid">
+      <% if (wishlist.length > 0) { %>
+        <% wishlist.forEach(item => { %>
+          <div class="wishlist-item">
+            <img src="<%= item.image %>" class="wishlist-image" alt="<%= item.name %>">
+            <div class="wishlist-details">
+              <h3 class="wishlist-item-title"><%= item.name %></h3>
+              <p class="wishlist-item-price">₹<%= item.price %></p>
+              <form action="/remove-wishlist" method="POST">
+                <input type="hidden" name="name" value="<%= item.name %>">
+                <button type="submit" class="remove-btn">Remove</button>
+              </form>
+            </div>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <p>Your wishlist is empty.</p>
+      <% } %>
+    </div>
+  </div>
+</body>
+</html>
