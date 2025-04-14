@@ -30,12 +30,40 @@ router.post('/login', async (req, res) => {
 
 // GET profile
 router.get('/profile', (req, res) => {
-  if (!req.session.user) return res.redirect('/profile');
+  if (!req.session.user) return res.redirect('/');
   res.render('profile', { user: req.session.user });
 });
+
 router.get('/wishlist', (req, res) => {
     if (!req.session.user) return res.redirect('/');
     res.render('addToWishlist', { user: req.session.user });
   });
 
+  router.post('/add-wishlist', async (req, res) => {
+    console.log('Add to wishlist hit');
+    console.log('Session user:', req.session.user); // Check if session has user
+    console.log('Body:', req.body); // Check what data is being sent
+  
+    if (!req.session.user) {
+      return res.status(401).send('Not logged in');
+    }
+  
+    const { name, image, price } = req.body;
+    const newWishlistItem = new Wishlist({
+      userId: req.session.user._id,
+      name,
+      image,
+      price
+    });
+  
+    try {
+      await newWishlistItem.save();
+      res.status(200).send('Added to wishlist');
+    } catch (err) {
+      console.error('Error adding to wishlist:', err);
+      res.status(500).send('Error adding to wishlist');
+    }
+  });
+  
+  
 module.exports = router; 

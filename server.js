@@ -5,6 +5,11 @@ const path = require('path');
 const authRoutes = require('./routes/auth');
 
 const app = express();
+const cors = require('cors');
+app.use(cors({
+  origin: 'http://127.0.0.1:50609', // or wherever you're opening main.html from
+  credentials: true
+}));
 // Connect to MongoDB
 mongoose.connect('mongodb+srv://LizaJulaha:Liza1234@cluster0.rkzcks7.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
   useNewUrlParser: true,
