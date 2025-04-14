@@ -5,7 +5,6 @@ const path = require('path');
 const authRoutes = require('./routes/auth');
 
 const app = express();
-
 // Connect to MongoDB
 mongoose.connect('mongodb+srv://LizaJulaha:Liza1234@cluster0.rkzcks7.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
   useNewUrlParser: true,

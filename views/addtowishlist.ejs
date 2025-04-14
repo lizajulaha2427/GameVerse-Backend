@@ -4,30 +4,93 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wishlist</title>
-  <link rel="stylesheet" href="/wishlist.css">
+  <link rel="stylesheet" href="/css/wishlist.css">
 </head>
 <body>
   <div class="wishlist-container">
-    <h2 class="wishlist-title">Your Wishlist</h2>
-    <div class="wishlist-grid">
-      <% if (wishlist.length > 0) { %>
-        <% wishlist.forEach(item => { %>
-          <div class="wishlist-item">
-            <img src="<%= item.image %>" class="wishlist-image" alt="<%= item.name %>">
-            <div class="wishlist-details">
-              <h3 class="wishlist-item-title"><%= item.name %></h3>
-              <p class="wishlist-item-price">₹<%= item.price %></p>
-              <form action="/remove-wishlist" method="POST">
-                <input type="hidden" name="name" value="<%= item.name %>">
-                <button type="submit" class="remove-btn">Remove</button>
-              </form>
-            </div>
-          </div>
-        <% }) %>
-      <% } else { %>
-        <p>Your wishlist is empty.</p>
-      <% } %>
-    </div>
+    <h2 class="wishlist-title">Wishlist</h2>
+    <div id="wishlist-grid" class="wishlist-grid"></div>
+    <p id="empty-message" style="display:none;">Your wishlist is empty.</p>
   </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+      const wishlistGrid = document.getElementById("wishlist-grid");
+      const emptyMessage = document.getElementById("empty-message");
+
+      if (wishlist.length > 0) {
+        wishlist.forEach(item => {
+          addToWishlist(item.name, item.image, item.price);
+        });
+        emptyMessage.style.display = 'none';
+      } else {
+        emptyMessage.style.display = 'block';
+      }
+    });
+
+    function addToWishlist(gameName, gameImage, price) {
+      const wishlistGrid = document.getElementById("wishlist-grid");
+
+      const itemDiv = document.createElement("div");
+      itemDiv.classList.add("wishlist-item");
+
+      const img = document.createElement("img");
+      img.src = gameImage;
+      img.alt = gameName;
+      img.classList.add("wishlist-image");
+
+      const detailsDiv = document.createElement("div");
+      detailsDiv.classList.add("wishlist-details");
+
+      const title = document.createElement("h3");
+      title.classList.add("wishlist-item-title");
+      title.innerText = gameName;
+
+      const priceTag = document.createElement("p");
+      priceTag.classList.add("wishlist-item-price");
+      priceTag.innerText = `₹${price}`;
+
+      const removeBtn = document.createElement("button");
+      removeBtn.classList.add("remove-btn", "see-more-btn");
+      removeBtn.innerText = "Remove";
+      removeBtn.onclick = function () {
+        wishlistGrid.removeChild(itemDiv);
+        removeFromWishlist(gameName);
+      };
+
+      detailsDiv.appendChild(title);
+      detailsDiv.appendChild(priceTag);
+      detailsDiv.appendChild(removeBtn);
+
+      itemDiv.appendChild(img);
+      itemDiv.appendChild(detailsDiv);
+
+      wishlistGrid.appendChild(itemDiv);
+
+      updateEmptyMessage();
+    }
+
+    function removeFromWishlist(gameName) {
+      let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+      wishlist = wishlist.filter(item => item.name !== gameName);
+      localStorage.setItem("wishlist", JSON.stringify(wishlist));
+      setTimeout(updateEmptyMessage, 0);
+    }
+
+    function updateEmptyMessage() {
+      const emptyMessage = document.getElementById("empty-message");
+      const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+      const wishlistGrid = document.getElementById("wishlist-grid");
+
+      if (wishlist.length === 0) {
+        emptyMessage.style.display = 'block';
+        wishlistGrid.style.height = 'auto';
+      } else {
+        emptyMessage.style.display = 'none';
+        wishlistGrid.style.height = 'auto';
+      }
+    }
+  </script>
 </body>
 </html>

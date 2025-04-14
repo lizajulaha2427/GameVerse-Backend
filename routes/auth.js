@@ -30,64 +30,12 @@ router.post('/login', async (req, res) => {
 
 // GET profile
 router.get('/profile', (req, res) => {
-  if (!req.session.user) return res.redirect('/');
+  if (!req.session.user) return res.redirect('/profile');
   res.render('profile', { user: req.session.user });
 });
-
-
-const Wishlist = require('../models/wishlist');
-
-router.post('/add-wishlist', async (req, res) => {
-    console.log('Add to wishlist hit');
-    console.log('Session user:', req.session.user); // Check if session has user
-    console.log('Body:', req.body); // Check what data is being sent
-  
-    if (!req.session.user) {
-      return res.status(401).send('Not logged in');
-    }
-  
-    const { name, image, price } = req.body;
-    const newWishlistItem = new Wishlist({
-      userId: req.session.user._id,
-      name,
-      image,
-      price
-    });
-  
-    try {
-      await newWishlistItem.save();
-      res.status(200).send('Added to wishlist');
-    } catch (err) {
-      console.error(err);
-      res.status(500).send('Error adding to wishlist');
-    }
+router.get('/wishlist', (req, res) => {
+    if (!req.session.user) return res.redirect('/');
+    res.render('addToWishlist', { user: req.session.user });
   });
-  
 
-// Get wishlist for logged-in user
-router.get('/wishlist', async (req, res) => {
-  if (!req.session.user) return res.redirect('/');
-
-  try {
-    const items = await Wishlist.find({ userId: req.session.user._id });
-    res.render('wishlist', { items });
-  } catch (err) {
-    res.status(500).send('Error fetching wishlist');
-  }
-});
-
-// Remove from wishlist
-router.post('/remove-wishlist', async (req, res) => {
-  const { name } = req.body;
-
-  try {
-    await Wishlist.deleteOne({
-      userId: req.session.user._id,
-      name
-    });
-
-    res.redirect('/wishlist');
-  } catch (err) {
-    res.status(500).send('Error removing item');
-  }
-});
+module.exports = router; 
