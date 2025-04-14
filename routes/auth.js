@@ -22,7 +22,7 @@ router.post('/login', async (req, res) => {
   const user = await User.findOne({ email });
   if (user && await bcrypt.compare(password, user.password)) {
     req.session.user = user;
-    res.redirect('http://127.0.0.1:50609/main.html');
+    res.redirect('http://127.0.0.1:49960/main.html');
   } else {
     res.send('Invalid credentials');
   }
