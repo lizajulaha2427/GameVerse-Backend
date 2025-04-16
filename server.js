@@ -7,7 +7,7 @@ const authRoutes = require('./routes/auth');
 const app = express();
 const cors = require('cors');
 app.use(cors({
-  origin: 'http://127.0.0.1:49960', // or wherever you're opening main.html from
+  origin: 'http://127.0.0.1:52258', // or wherever you're opening main.html from
   credentials: true
 }));
 // Connect to MongoDB
